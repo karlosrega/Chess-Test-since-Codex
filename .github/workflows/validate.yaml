@@ -37,6 +37,7 @@ jobs:
           for attempt in $(seq 1 50); do curl -fsS http://127.0.0.1:3001/api/ready && break || sleep 1; done
           node scripts/browser-check.mjs
       - name: Verify compiled proxy against the Go vulnerability database
+        if: always()
         run: docker build --target verify -f deploy/Dockerfile.caddy .
       - name: Scan runtime image for all known vulnerability severities
         if: always()

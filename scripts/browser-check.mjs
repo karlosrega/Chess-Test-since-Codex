@@ -5,7 +5,7 @@ const {chromium}=createRequire(new URL('../.qa-tools/package.json',import.meta.u
 const base=process.env.QA_URL||'http://127.0.0.1:3001',password='Jaque QA 2026 seguro!',results=[];
 mkdirSync('artifacts',{recursive:true});
 const browser=await chromium.launch({headless:true});
-async function login(page,email){await page.goto(base+'/#account');await page.locator('#loginTab').click();await page.locator('#email').fill(email);await page.locator('#password').fill(password);await page.locator('#accountSubmit').click();await page.locator('#homeView').waitFor({state:'visible'});await page.locator('#connection').filter({hasText:'Conectado'}).waitFor();}
+async function login(page,email){await page.goto(base+'/#account');await page.locator('#loginTab').click();await page.locator('#email').fill(email);await page.locator('#password').fill(password);await page.locator('#accountSubmit').click();await page.locator('#homeView').waitFor({state:'visible'});await page.locator('#connection').filter({hasText:'Conectado'}).waitFor({state:'attached'});}
 async function move(page,scope,from,to,touch){
   await page.locator(scope).scrollIntoViewIfNeeded();
   const source=page.locator(scope+' [aria-label^="'+from+' "]'),target=page.locator(scope+' [aria-label^="'+to+' "]');

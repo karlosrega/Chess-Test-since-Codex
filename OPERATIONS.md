@@ -27,8 +27,11 @@ medir carga en el servidor Linux elegido antes de fijar un número de usuarios.
 
 Requiere Docker Engine y Compose en Linux, disco persistente y salida a Internet
 para instalar las imágenes y Stockfish. El build descarga la distribución oficial
-fijada, verifica SHA256 y ejecuta todas las pruebas. Las imágenes Node/Caddy están
-fijadas por versión y digest; actualizar deliberadamente y repetir pruebas/auditoría.
+fijada, verifica SHA256 y ejecuta todas las pruebas. La construcción usa Node24.19 fijado por digest y la imagen final Distroless
+Debian13, sin npm ni shell, con UID1000. El proxy se compila desde Caddy2.11.6
+con Go1.27.1; las bases también están fijadas por digest. Actualizar
+deliberadamente y repetir pruebas/auditoría. La imagen final no permite comandos
+de shell: usar docker compose exec app node ... para tareas operativas.
 
 1. Elegir dominio y dirigir DNS al servidor. Abrir80/TCP,443/TCP y opcional443/UDP.
 2. Elegir proveedor SMTP, verificar remitente y configurar SPF/DKIM/DMARC según
@@ -115,7 +118,8 @@ recupera el bloqueo cuando confirma que el proceso anterior ya no existe.
 - [ ] Auditoría de paquetes del sistema y de la imagen, además de pnpm audit.
 - [ ] Medición de carga y recuperación en el servidor elegido.
 - [ ] Dominio real, certificado, proveedor SMTP y recuperación recibida en buzón real.
-- [ ] Copia externa y restauración ensayadas en el entorno Linux.
+- [ ] Copia externa y restauración en el servidor destino. Las copias en caliente,
+  volúmenes y restauración ya se ensayaron en contenedores desechables de CI.
 - [ ] Recorridos finales escritorio/móvil con dos cuentas desde dispositivos distintos.
 
 No hay torneos, chat, espectadores, pagos ni sistema avanzado contra trampas en
