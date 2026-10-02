@@ -1,9 +1,20 @@
 {
-  "name": "first-project-chess",
-  "version": "0.1.0",
+  "name": "jaque-royale",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "scripts": {"start": "node server.js", "test": "node --test"},
-  "engines": {"node": ">=24"},
-  "dependencies": {"chess.js": "^1.4.0", "ws": "^8.18.3"}
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test",
+    "engine:install": "node scripts/install-engine.mjs",
+    "qa": "node scripts/preview-qa.mjs"
+  },
+  "engines": {
+    "node": ">=24.19 <25"
+  },
+  "dependencies": {
+    "chess.js": "1.4.0",
+    "nodemailer": "10.0.13",
+    "ws": "8.22.0"
+  }
 }

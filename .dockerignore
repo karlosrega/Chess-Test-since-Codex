@@ -1,0 +1,13 @@
+.git
+.codex
+.agents
+node_modules
+engines
+data
+backups
+artifacts
+deploy/secrets
+.env
+.env.*
+*.log
+*.png

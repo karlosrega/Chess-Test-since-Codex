@@ -17,12 +17,12 @@ test('SQLite conserva usuarios y una sala después de reiniciar',async()=>{
   finally {await second.close();}
 });
 
-test('dos jugadores: identidad, turnos, mate, Elo e historial persistido',async t=>{
+test('dos jugadores: identidad, turnos, mate amistoso e historial persistido',async t=>{
   const app=createApp({database:':memory:'});
   await new Promise(r=>app.server.listen(0,'127.0.0.1',r));
   t.after(()=>app.close());
   const url=`ws://127.0.0.1:${app.server.address().port}/ws`;
-  async function client(){const ws=new WebSocket(url),queue=[],wait=[];ws.on('message',raw=>{const m=JSON.parse(raw);const i=wait.findIndex(w=>w.type===m.type);if(i>=0)wait.splice(i,1)[0].resolve(m);else queue.push(m);});await new Promise(r=>ws.on('open',r));return{ws,send:m=>ws.send(JSON.stringify(m)),next:type=>{const i=queue.findIndex(m=>m.type===type);if(i>=0)return Promise.resolve(queue.splice(i,1)[0]);return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Timeout: '+type)),3000);wait.push({type,resolve:m=>{clearTimeout(timer);resolve(m);}});});}};}
+  async function client(){const ws=new WebSocket(url),queue=[],wait=[];let current;ws.on('message',raw=>{const m=JSON.parse(raw);if(m.type==='game')current=m.game;const i=wait.findIndex(w=>w.type===m.type);if(i>=0)wait.splice(i,1)[0].resolve(m);else queue.push(m);});await new Promise(r=>ws.on('open',r));return{ws,send:m=>ws.send(JSON.stringify({...m,id:current?.id,version:current?.version})),next:type=>{const i=queue.findIndex(m=>m.type===type);if(i>=0)return Promise.resolve(queue.splice(i,1)[0]);return new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Timeout: '+type)),3000);wait.push({type,resolve:m=>{clearTimeout(timer);resolve(m);}});});}};}
   const w=await client(),b=await client();
   w.send({type:'hello',name:'Ana'});const wu=await w.next('hello');
   b.send({type:'hello',name:'Luis'});await b.next('hello');
@@ -31,7 +31,7 @@ test('dos jugadores: identidad, turnos, mate, Elo e historial persistido',async 
   b.send({type:'move',from:'e7',to:'e5'});assert.match((await b.next('error')).message,/turno/);
   w.send({type:'move',from:'e2',to:'e5'});await w.next('error');
   for(const [c,from,to] of [[w,'f2','f3'],[b,'e7','e5'],[w,'g2','g4'],[b,'d8','h4']]){c.send({type:'move',from,to});await w.next('game');await b.next('game');}
-  w.send({type:'stats'});const stats=await w.next('stats');assert.equal(stats.user.rating,1184);assert.equal(stats.user.played,1);assert.equal(stats.history[0].result,'0-1');assert.equal(app.db.prepare('SELECT count(*) n FROM ratings').get().n,2);
+  w.send({type:'stats'});const stats=await w.next('stats');assert.equal(stats.user.rating,1200);assert.equal(stats.user.played,1);assert.equal(stats.history[0].result,'0-1');assert.equal(app.db.prepare('SELECT count(*) n FROM ratings').get().n,0);
   b.send({type:'resign'});await b.next('error');assert.equal(app.db.prepare('SELECT played FROM users WHERE name=?').get('Luis').played,1);
   const again=await client();again.send({type:'hello',token:wu.token});assert.equal((await again.next('hello')).user.name,'Ana');
 });

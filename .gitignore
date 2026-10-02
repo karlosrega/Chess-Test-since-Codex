@@ -1,6 +1,13 @@
 node_modules/
+engines/
 .pnpm-store/
 board-red.png
 data/
 .env
 *.log
+.env.*
+!.env.example
+production.env
+deploy/secrets/
+backups/
+artifacts/
