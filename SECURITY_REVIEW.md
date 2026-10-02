@@ -78,3 +78,9 @@ Estos controles reducen exposición; no corrigen por sí solos las vulnerabilida
 CI falla ante hallazgos altos/críticos y ante avisos detectados por govulncheck.
 No se añadió ninguna lista de excepciones al escáner.
 
+
+La acción antigua de subida de informes emitió DEP0040 (punycode) y DEP0169
+(url.parse). Se actualizó a actions/upload-artifact7.0.1, fijada al SHA oficial
+043fb46d1a93c77aae656e7c1c64a875d1fc6a0a, con runtime Node24. La CI posterior
+verifica la subida y permite revisar si persisten esos avisos. No se silencian
+las advertencias del runtime ni del escáner.
