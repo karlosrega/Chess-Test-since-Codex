@@ -23,6 +23,8 @@ jobs:
         run: test "$(docker run --rm --entrypoint node jaque-royale:qa -e 'console.log(process.getuid())')" = "1000"
       - name: Audit application dependencies
         run: docker build --target build -t jaque-royale:build . && docker run --rm --entrypoint pnpm jaque-royale:build audit --prod
+      - name: Repeat complete suite inside final read-only runtime image
+        run: docker run --rm --read-only --tmpfs=/tmp:rw,size=128m,mode=1777 --memory=1g --cpus=2 --cap-drop=ALL -e NODE_ENV=development jaque-royale:qa node --test --test-concurrency=2
       - name: Exercise persistent volumes, process failures and restoration
         run: node scripts/container-check.mjs
       - name: Load test 128 authenticated sessions with bounded resources
@@ -34,6 +36,8 @@ jobs:
           docker run -d --name chess-browser --init -e NODE_ENV=development -e HOST=0.0.0.0 -p 127.0.0.1:3001:3001 jaque-royale:qa node scripts/preview-qa.mjs
           for attempt in $(seq 1 50); do curl -fsS http://127.0.0.1:3001/api/ready && break || sleep 1; done
           node scripts/browser-check.mjs
+      - name: Verify compiled proxy against the Go vulnerability database
+        run: docker build --target verify -f deploy/Dockerfile.caddy .
       - name: Scan runtime image for all known vulnerability severities
         if: always()
         run: |
