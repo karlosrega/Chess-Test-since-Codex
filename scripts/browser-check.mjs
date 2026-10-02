@@ -5,7 +5,7 @@ const {chromium}=createRequire(new URL('../.qa-tools/package.json',import.meta.u
 const base=process.env.QA_URL||'http://127.0.0.1:3001',password='Jaque QA 2026 seguro!',results=[];
 mkdirSync('artifacts',{recursive:true});
 const browser=await chromium.launch({headless:true});
-async function login(page,email){await page.goto(base+'/#account');await page.locator('#email').fill(email);await page.locator('#password').fill(password);await page.locator('#accountSubmit').click();await page.locator('#homeView').waitFor({state:'visible'});await page.locator('#connection').filter({hasText:'Conectado'}).waitFor();}
+async function login(page,email){await page.goto(base+'/#account');await page.locator('#loginTab').click();await page.locator('#email').fill(email);await page.locator('#password').fill(password);await page.locator('#accountSubmit').click();await page.locator('#homeView').waitFor({state:'visible'});await page.locator('#connection').filter({hasText:'Conectado'}).waitFor();}
 async function move(page,scope,from,to,touch){
   const source=page.locator(scope+' [aria-label^="'+from+' "]'),target=page.locator(scope+' [aria-label^="'+to+' "]');
   if(touch){await source.tap();await target.tap();}else{const a=await source.boundingBox(),b=await target.boundingBox();assert.ok(a&&b);await page.mouse.move(a.x+a.width/2,a.y+a.height/2);await page.mouse.down();await page.mouse.move(b.x+b.width/2,b.y+b.height/2,{steps:8});await page.mouse.up();}
@@ -28,7 +28,8 @@ try{
       await page.goto(base+'/#practice?id=e10');await page.locator('.training-turn').filter({hasText:'Tu turno'}).waitFor();await move(page,'.training-board','a7','a8',mobile);await page.locator('.training-promotion').waitFor({state:'visible'});await page.locator('.training-promotion [data-promotion="q"]').click();await page.locator('.training-turn').filter({hasText:'¡Reto completado!'}).waitFor();
       await page.reload();await page.locator('.training-turn').filter({hasText:'¡Reto completado!'}).waitFor();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:'artifacts/practice-'+(mobile?'mobile':'desktop')+'.png',fullPage:true});
       await page.locator('#logout').click();await page.locator('#profileName').filter({hasText:'Bienvenido'}).waitFor();assert.deepEqual(errors,[]);results.push({viewport:options.viewport,touch:mobile,passed:true,consoleErrors:errors});
-    }finally{for(const context of contexts)await context.close();}
+    }catch(error){await page.screenshot({path:'artifacts/failure-'+(mobile?'mobile':'desktop')+'.png',fullPage:true});console.error('Browser failure:',await page.locator('#authStatus').textContent(),await page.locator('#alert').textContent());throw error;}
+    finally{for(const context of contexts)await context.close();}
   }
   console.log('PASS navegador: registro, login, dos jugadores, drag/touch, reconexión, bloqueo de ayudas, tablas, entrenamiento, promoción, persistencia y logout.');
 }finally{writeFileSync('artifacts/browser-results.json',JSON.stringify(results,null,2));await browser.close();}

@@ -37,9 +37,14 @@ jobs:
           mkdir -p artifacts
           docker save jaque-royale:qa -o artifacts/runtime.tar
           docker run --rm -v "$PWD/artifacts:/scan" aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --input /scan/runtime.tar --scanners vuln --format json --output /scan/vulnerabilities.json
+          docker save caddy:2.11.4-alpine@sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b -o artifacts/proxy.tar
+          docker run --rm -v "$PWD/artifacts:/scan" aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --input /scan/proxy.tar --scanners vuln --format json --output /scan/proxy-vulnerabilities.json
           jq '[.Results[]?.Vulnerabilities[]? | {id: .VulnerabilityID, package: .PkgName, severity: .Severity, installed: .InstalledVersion, fixed: .FixedVersion}]' artifacts/vulnerabilities.json > artifacts/vulnerability-summary.json
           cat artifacts/vulnerability-summary.json
           test "$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH" or .Severity == "CRITICAL")] | length' artifacts/vulnerabilities.json)" = "0"
+          jq '[.Results[]?.Vulnerabilities[]? | {id: .VulnerabilityID, package: .PkgName, severity: .Severity, installed: .InstalledVersion, fixed: .FixedVersion}]' artifacts/proxy-vulnerabilities.json > artifacts/proxy-summary.json
+          cat artifacts/proxy-summary.json
+          test "$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH" or .Severity == "CRITICAL")] | length' artifacts/proxy-vulnerabilities.json)" = "0"
       - name: Retain test and security reports
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
