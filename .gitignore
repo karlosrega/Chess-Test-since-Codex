@@ -11,3 +11,4 @@ production.env
 deploy/secrets/
 backups/
 artifacts/
+.qa-tools/

@@ -5,7 +5,9 @@ import {performance,monitorEventLoopDelay} from 'node:perf_hooks';
 import {WebSocket} from 'ws';
 import {createApp} from '../server.js';
 
-test('32 sesiones autenticadas: 16 partidas simultáneas sin cruces de estado ni resultados duplicados',async t=>{
+const count=Number(process.env.LOAD_CLIENTS||32);
+if(!Number.isInteger(count)||count<2||count>200||count%2)throw Error('LOAD_CLIENTS requiere un número par entre2 y200.');
+test(`${count} sesiones autenticadas: ${count/2} partidas simultáneas sin cruces de estado ni resultados duplicados`,async t=>{
   const app=createApp({database:':memory:',production:false,clock:()=>1000000,trustedProxy:'127.0.0.1'});await new Promise(r=>app.server.listen(0,'127.0.0.1',r));t.after(()=>app.close());
   const origin=`http://127.0.0.1:${app.server.address().port}`,clients=[],latencies=[],lag=monitorEventLoopDelay({resolution:20});lag.enable();t.after(()=>lag.disable());
   async function client(index){
@@ -17,17 +19,17 @@ test('32 sesiones autenticadas: 16 partidas simultáneas sin cruces de estado ni
     await next(message=>message.type==='hello');
     return {uid,ws,next,messages,get game(){return game;},send:message=>ws.send(JSON.stringify({id:game?.id,version:game?.version,...message}))};
   }
-  clients.push(...await Promise.all(Array.from({length:32},(_,index)=>client(index))));
+  clients.push(...await Promise.all(Array.from({length:count},(_,index)=>client(index))));
   await Promise.all(clients.map(async c=>{c.send({type:'queue',mode:'rapid'});await c.next(message=>message.type==='game');}));
-  const ids=[...new Set(clients.map(c=>c.game.id))];assert.equal(ids.length,16);assert.equal(app.games.queue.size,0);
+  const ids=[...new Set(clients.map(c=>c.game.id))];assert.equal(ids.length,count/2);assert.equal(app.games.queue.size,0);
   await Promise.all(ids.map(async id=>{
     const pair=clients.filter(c=>c.game.id===id),white=pair.find(c=>c.game.white.id===c.uid),black=pair.find(c=>c!==white);
     async function action(actor,message){const version=actor.game.version,start=performance.now();actor.send(message);await Promise.all(pair.map(c=>c.next(m=>m.type==='game'&&m.game.id===id&&m.game.version>version)));latencies.push(performance.now()-start);}
     for(const [actor,from,to] of [[white,'e2','e4'],[black,'e7','e5'],[white,'g1','f3'],[black,'b8','c6']])await action(actor,{type:'move',from,to});
     await action(white,{type:'draw'});await action(black,{type:'draw'});assert.equal(white.game.result,'1/2-1/2');assert.equal(white.game.status,'finished');
   }));
-  assert.equal(app.db.prepare("SELECT count(*) n FROM games WHERE status='finished'").get().n,16);assert.equal(app.db.prepare('SELECT count(*) n FROM ratings').get().n,32);
-  assert.equal(app.db.prepare('SELECT count(*) n FROM users WHERE played=1').get().n,32);assert.equal(clients.flatMap(c=>c.messages||[]).filter(m=>m.type==='error').length,0);
+  assert.equal(app.db.prepare("SELECT count(*) n FROM games WHERE status='finished'").get().n,count/2);assert.equal(app.db.prepare('SELECT count(*) n FROM ratings').get().n,count);
+  assert.equal(app.db.prepare('SELECT count(*) n FROM users WHERE played=1').get().n,count);assert.equal(clients.flatMap(c=>c.messages||[]).filter(m=>m.type==='error').length,0);
   latencies.sort((a,b)=>a-b);const p95=latencies[Math.floor(latencies.length*.95)];assert.ok(p95<1000,`Respuesta p95 ${p95.toFixed(0)}ms`);
-  t.diagnostic(`32 conexiones,16 partidas,96 acciones; p95=${p95.toFixed(1)}ms; retraso del event loop p99=${(lag.percentile(99)/1e6).toFixed(1)}ms. Medición local, no certificación de capacidad Linux.`);
+  t.diagnostic(`${count} conexiones,${count/2} partidas,${count*3} acciones; p95=${p95.toFixed(1)}ms; event loop p99=${(lag.percentile(99)/1e6).toFixed(1)}ms; RSS=${(process.memoryUsage().rss/1048576).toFixed(1)}MiB. Sesiones sintéticas; no mide carga de login ni certifica capacidad del servidor destino.`);
 });

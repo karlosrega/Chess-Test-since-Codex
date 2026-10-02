@@ -11,3 +11,4 @@ deploy/secrets
 .env.*
 *.log
 *.png
+.qa-tools

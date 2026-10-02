@@ -1,6 +1,7 @@
 name: Validate MVP
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -19,3 +20,35 @@ jobs:
         run: test "$(docker run --rm --entrypoint id jaque-royale:qa -u)" = "1000"
       - name: Audit application dependencies
         run: docker build --target build -t jaque-royale:build . && docker run --rm --entrypoint pnpm jaque-royale:build audit --prod
+      - name: Exercise persistent volumes, process failures and restoration
+        run: node scripts/container-check.mjs
+      - name: Load test 128 authenticated sessions with bounded resources
+        run: docker run --rm --memory=1g --cpus=2 -e NODE_ENV=development -e LOAD_CLIENTS=128 jaque-royale:qa node --test test/concurrent-games.test.js
+      - name: Browser journeys on desktop and simulated touch device
+        run: |
+          npm install --prefix .qa-tools --ignore-scripts --no-audit --no-fund playwright@1.63.0
+          .qa-tools/node_modules/.bin/playwright install --with-deps chromium
+          docker run -d --name chess-browser --init -e NODE_ENV=development -e HOST=0.0.0.0 -p 127.0.0.1:3001:3001 jaque-royale:qa node scripts/preview-qa.mjs
+          for attempt in $(seq 1 50); do curl -fsS http://127.0.0.1:3001/api/ready && break || sleep 1; done
+          node scripts/browser-check.mjs
+      - name: Scan runtime image for all known vulnerability severities
+        if: always()
+        run: |
+          mkdir -p artifacts
+          docker save jaque-royale:qa -o artifacts/runtime.tar
+          docker run --rm -v "$PWD/artifacts:/scan" aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --input /scan/runtime.tar --scanners vuln --format json --output /scan/vulnerabilities.json
+          jq '[.Results[]?.Vulnerabilities[]? | {id: .VulnerabilityID, package: .PkgName, severity: .Severity, installed: .InstalledVersion, fixed: .FixedVersion}]' artifacts/vulnerabilities.json > artifacts/vulnerability-summary.json
+          cat artifacts/vulnerability-summary.json
+          test "$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH" or .Severity == "CRITICAL")] | length' artifacts/vulnerabilities.json)" = "0"
+      - name: Retain test and security reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: qa-reports
+          path: |
+            artifacts/*.json
+            artifacts/*.png
+          retention-days: 14
+      - name: Close disposable browser container
+        if: always()
+        run: docker rm -f chess-browser || true
