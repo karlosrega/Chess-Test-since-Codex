@@ -5,14 +5,14 @@ import {DatabaseSync} from 'node:sqlite';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {createApp} from '../server.js';
-import {openDatabase} from '../lib/database.js';
+import {openDatabase,SCHEMA_VERSION} from '../lib/database.js';
 import {createBackup,restoreBackup,inspectBackup} from '../lib/backups.js';
 
 test('copia en caliente incluye WAL, checksum y restauración conserva cuentas y progreso',async t=>{
   const dir=mkdtempSync(join(tmpdir(),'chess-backup-')),path=join(dir,'live.sqlite'),copy=join(dir,'backup.sqlite');
-  const app=createApp({database:path,production:false});
+  const app=createApp({database:path,production:false});t.after(()=>app.close());
   app.db.prepare("INSERT INTO users(id,name) VALUES('qa','QA Backup')").run();app.db.prepare("INSERT INTO training_runs(id,user,item,status) VALUES('run','qa','p01','solved')").run();
-  const manifest=await createBackup(path,copy);assert.equal(manifest.schema,5);assert.equal(manifest.users,1);assert.ok(existsSync(copy+'.json'));
+  const manifest=await createBackup(path,copy);assert.equal(manifest.schema,SCHEMA_VERSION);assert.equal(manifest.users,1);assert.ok(existsSync(copy+'.json'));
   assert.equal(inspectBackup(copy).users,1);await assert.rejects(restoreBackup(copy,path),/otra instancia/);await app.close();
   const changed=openDatabase(path);changed.prepare("INSERT INTO users(id,name) VALUES('later','Más tarde')").run();changed.close();
   const restored=await restoreBackup(copy,path);assert.ok(existsSync(restored.previous));assert.equal(inspectBackup(restored.previous).users,2);

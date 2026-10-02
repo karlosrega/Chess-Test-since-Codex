@@ -45,7 +45,7 @@ de shell: usar docker compose exec app node ... para tareas operativas.
 ```sh
 docker compose config --quiet
 docker compose build
-docker compose run --rm --no-deps --entrypoint node app --test
+docker compose run --rm --no-deps -e NODE_ENV=development --entrypoint node app --test
 docker compose up -d
 docker compose ps
 curl --fail https://TU_DOMINIO/api/ready

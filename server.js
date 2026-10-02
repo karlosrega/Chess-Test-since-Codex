@@ -44,7 +44,7 @@ export function createApp({ database = process.env.DATABASE_PATH||'data/chess.sq
     attach:(ids,id)=>{for(const socket of sockets)if(ids.includes(socket.uid))socket.room=id;},
     notify:(ids,message)=>{
       if(message.type==='game')message.game.online={white:Boolean(message.game.white)&&[...sockets].some(s=>s.uid===message.game.white.id),black:Boolean(message.game.black)&&[...sockets].some(s=>s.uid===message.game.black.id)};
-      for(const socket of sockets)if(ids.includes(socket.uid))send(socket,message);
+      for(const socket of sockets)if(ids.includes(socket.uid) && (message.type!=='game' || socket.room===message.game.id))send(socket,message);
     },
   });
   const broadcast=id=>games.publish(id);

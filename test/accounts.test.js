@@ -7,7 +7,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { WebSocket } from 'ws';
 import { createApp } from '../server.js';
 import { hashToken, createAccounts } from '../lib/accounts.js';
-import { openDatabase } from '../lib/database.js';
+import { openDatabase, SCHEMA_VERSION } from '../lib/database.js';
 
 async function fixture(t) {
   const app = createApp({ database: ':memory:', production: false });
@@ -125,7 +125,7 @@ test('migraciones conservan base antigua, generan copia y son idempotentes', () 
   old.close();
   const migrated = openDatabase(path);
   assert.equal(migrated.prepare('SELECT name FROM users').get().name,'Jugador anterior');
-  assert.equal(migrated.prepare('PRAGMA user_version').get().user_version,5);
+  assert.equal(migrated.prepare('PRAGMA user_version').get().user_version,SCHEMA_VERSION);
   assert.equal(readdirSync(dir).filter(f=>f.endsWith('.bak')).length,1);
   migrated.close();
   const again = openDatabase(path); again.close();

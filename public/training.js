@@ -49,7 +49,7 @@ export function createTrainingView({container,kind,session,onProgress,notify}){
     try{const result=await api('/api/training/run/'+run.id,{type,version:run.version,...extra},session().csrf);if(current!==generation)return;run=result;selected=null;render();if(type==='hint'||run.status!=='active'){
       await onProgress();if(current!==generation)return;const latest=await api('/api/training/catalog?kind='+kind);if(current!==generation)return;items=latest.items;const progress=latest.progress[kind==='puzzle'?'puzzles':'exercises'];$('.training-summary').textContent=`${progress.solved} / ${progress.total} resueltos · ${progress.unassisted} sin ayuda`;
     }}
-    catch(error){if(current!==generation)return;notify(error.message);try{run=await api('/api/training/run/'+run.id);if(current===generation)render();}catch{if(current===generation){run=null;$('.training-play').hidden=true;}}}
+    catch(error){if(current!==generation)return;notify(error.message);try{const recovered=await api('/api/training/run/'+run.id);if(current!==generation)return;run=recovered;render();}catch{if(current===generation){run=null;$('.training-play').hidden=true;}}}
     finally{if(current===generation)lock(false);}
   }
   $('.training-level').onchange=$('.training-motif').onchange=$('.training-filter').onchange=catalog;

@@ -36,6 +36,7 @@ jobs:
           docker run -d --name chess-browser --init -e NODE_ENV=development -e HOST=0.0.0.0 -p 127.0.0.1:3001:3001 jaque-royale:qa node scripts/preview-qa.mjs
           for attempt in $(seq 1 50); do curl -fsS http://127.0.0.1:3001/api/ready && break || sleep 1; done
           node scripts/browser-check.mjs
+          node scripts/training-race-check.mjs
       - name: Verify compiled proxy against the Go vulnerability database
         if: always()
         run: docker build --target verify -f deploy/Dockerfile.caddy .
