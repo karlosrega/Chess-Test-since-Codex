@@ -41,23 +41,24 @@ export function createTrainingView({container,kind,session,onProgress,notify}){
     if(!session().me){notify('Inicia sesión para guardar tu progreso.');location.hash='account';return;}
     const current=++generation;lock(true);
     try{const result=await api('/api/training/start',{item:id,restart},session().csrf);if(current!==generation)return;run=result;selected=null;board.black=run.item.color==='b';render();}
-    catch(error){notify(error.message);$('.training-play').hidden=true;$('.training-list').hidden=false;$('.training-filters').hidden=false;}
+    catch(error){if(current!==generation)return;notify(error.message);$('.training-play').hidden=true;$('.training-list').hidden=false;$('.training-filters').hidden=false;}
     finally{if(current===generation)lock(false);}
   }
   async function act(type,extra={}){
     if(busy||!run)return;const current=generation;lock(true);notify('');
     try{const result=await api('/api/training/run/'+run.id,{type,version:run.version,...extra},session().csrf);if(current!==generation)return;run=result;selected=null;render();if(type==='hint'||run.status!=='active'){
-      await onProgress();const latest=await api('/api/training/catalog?kind='+kind);if(current!==generation)return;items=latest.items;const progress=latest.progress[kind==='puzzle'?'puzzles':'exercises'];$('.training-summary').textContent=`${progress.solved} / ${progress.total} resueltos · ${progress.unassisted} sin ayuda`;
+      await onProgress();if(current!==generation)return;const latest=await api('/api/training/catalog?kind='+kind);if(current!==generation)return;items=latest.items;const progress=latest.progress[kind==='puzzle'?'puzzles':'exercises'];$('.training-summary').textContent=`${progress.solved} / ${progress.total} resueltos · ${progress.unassisted} sin ayuda`;
     }}
-    catch(error){notify(error.message);if(current===generation){try{run=await api('/api/training/run/'+run.id);render();}catch{run=null;$('.training-play').hidden=true;}}}
+    catch(error){if(current!==generation)return;notify(error.message);try{run=await api('/api/training/run/'+run.id);if(current===generation)render();}catch{if(current===generation){run=null;$('.training-play').hidden=true;}}}
     finally{if(current===generation)lock(false);}
   }
   $('.training-level').onchange=$('.training-motif').onchange=$('.training-filter').onchange=catalog;
   $('.training-flip').onclick=()=>board.flip();$('.training-help').onclick=()=>act('hint');$('.training-reveal').onclick=()=>act('reveal');$('.training-undo').onclick=()=>act('undo');$('.training-explore').onclick=()=>act('explore');$('.training-guide').onclick=()=>act('guide');$('.training-restart').onclick=()=>start(run.item.id,true);$('.training-back').onclick=()=>routeTo();
   $('.training-next').onclick=()=>{const index=items.findIndex(item=>item.id===run.item.id);routeTo(items[(index+1)%items.length].id);};
   container.querySelectorAll('[data-promotion]').forEach(button=>button.onclick=()=>{const move=promotion;promotion=null;$('.training-promotion').close();if(move)act('move',{move:move.from+move.to+button.dataset.promotion});});$('.training-promotion-cancel').onclick=()=>{promotion=null;$('.training-promotion').close();};
-  return {async load(id){
+  return {clear(){generation++;run=null;items=[];selected=null;promotion=null;lock(false);$('.training-promotion').close();$('.training-play').hidden=true;$('.training-list').replaceChildren();$('.training-summary').textContent='Inicia sesión para ver tu progreso.';},async load(id){
     const current=++generation;run=null;selected=null;$('.training-promotion').close();$('.training-play').hidden=true;$('.training-list').hidden=false;$('.training-filters').hidden=false;$('.training-summary').textContent='Cargando retos…';
+    if(!session().me){$('.training-summary').textContent='Inicia sesión para ver tu progreso.';$('.training-list').replaceChildren();$('.training-filters').hidden=true;return;}
     if(session().humanGame){$('.training-summary').textContent='Termina tu partida contra otra persona antes de entrenar.';$('.training-list').replaceChildren();$('.training-filters').hidden=true;return;}
     try{const result=await api('/api/training/catalog?kind='+kind);if(current!==generation)return;items=result.items;const progress=result.progress[kind==='puzzle'?'puzzles':'exercises'];$('.training-summary').textContent=`${progress.solved} / ${progress.total} resueltos · ${progress.unassisted} sin ayuda`;
       const select=$('.training-motif'),previous=select.value;select.replaceChildren(new Option('Todos','all'),...Array.from(new Set(items.map(item=>item.motif))).map(motif=>new Option(motifs[motif],motif)));if([...select.options].some(option=>option.value===previous))select.value=previous;

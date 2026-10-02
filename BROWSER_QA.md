@@ -88,3 +88,9 @@ las métricas varían entre ejecuciones y todas quedan por debajo del umbral de1
 Sin hallazgos altos/críticos; quedan23 medios y8 bajos y1 aviso UNKNOWN del
 módulo del proxy. El análisis del binario confirma0 paquetes vulnerables
 importados. Revisar SECURITY_REVIEW.md para alcance y advertencias del escáner.
+
+Regresión adicional: cerrar sesión mientras una petición de inicio de ejercicio
+está retrasada. Se invalidan las continuaciones del entrenamiento y se esperan
+las peticiones en curso antes de revocar la sesión (timeout HTTP15s). Se evita
+que respuestas antiguas repueblen la interfaz; los mensajes del socket cerrado
+se desconectan. El navegador local pasa escritorio y móvil con esta regresión.
