@@ -115,7 +115,9 @@ recupera el bloqueo cuando confirma que el proceso anterior ya no existe.
 
 - [x] Build Linux completo y configuración Caddy validados por Docker/CI.
   https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/36954116089 (49 pruebas, usuario1000 y auditoría de dependencias).
-- [ ] Auditoría de paquetes del sistema y de la imagen, además de pnpm audit.
+- [x] Auditoría de paquetes e imágenes completada en CI.
+- [ ] Evaluar los23 hallazgos medios y8 bajos sin versión corregida;
+  SECURITY_REVIEW.md conserva el detalle y el diagnóstico del aviso del proxy.
 - [ ] Medición de carga y recuperación en el servidor elegido.
 - [ ] Dominio real, certificado, proveedor SMTP y recuperación recibida en buzón real.
 - [ ] Copia externa y restauración en el servidor destino. Las copias en caliente,

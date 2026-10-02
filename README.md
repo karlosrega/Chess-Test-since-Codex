@@ -122,3 +122,11 @@ Referencias técnicas: [Stockfish](https://stockfishchess.org/download/),
 [chess.js](https://github.com/jhlywa/chess.js), [ws](https://github.com/websockets/ws),
 [Nodemailer SMTP](https://nodemailer.com/smtp),
 [Caddy reverse proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy).
+
+## Validación ampliada
+
+La CI ejecuta49 pruebas en el runtime final, recuperación de contenedores y
+volúmenes, copia/restauración, carga de128 sesiones y recorridos Chromium de
+escritorio/móvil simulado. Consultar IMPLEMENTATION.md, BROWSER_QA.md y
+SECURITY_REVIEW.md para evidencias, alertas y límites. El despliegue público
+requiere las comprobaciones del servidor destino descritas en OPERATIONS.md.

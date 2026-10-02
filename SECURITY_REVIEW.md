@@ -1,16 +1,27 @@
 # Revisión de seguridad de imágenes
 
-Estado: evaluación en curso; no autoriza apertura pública.
+Estado: escaneos completados; revisión de hallazgos residuales pendiente. No autoriza apertura pública.
 
 La aplicación migró a Distroless Debian13 conservando Node24.19 y Stockfish19.
 El escaneo inicial reportó272 hallazgos (71 altos/críticos); la imagen mínima
-reportó31 medios/bajos, sin altos/críticos. Se conservan todos en los artefactos CI.
+reportó31 medios/bajos (23 medios y8 bajos), sin altos/críticos. Se conservan todos en los artefactos CI.
 Evidencia: https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/37029406732
 
 El proxy se reconstruye con Caddy2.11.6 y Go1.27.1. El escaneo ya no encontró
-altos/críticos, pero govulncheck detectó código OpenPGP antiguo enlazado:
-GO-2026-5932, paquete golang.org/x/crypto/openpgp, sin versión corregida.
-Se está identificando su dependencia para sustituirlo; no ignorar el aviso.
+altos/críticos. Trivy conserva GO-2026-5932 como aviso de severidad UNKNOWN
+sobre el módulo golang.org/x/crypto; OpenPGP no tiene versión corregida.
+El primer análisis binario no permitía afirmar que el paquete estuviera enlazado:
+xcaddy elimina símbolos por defecto y govulncheck entonces usa hallazgos del
+módulo completo. El build conserva ahora los símbolos en el ejecutable final.
+En la ejecución37032456413, govulncheck v1.8.0 encontró0 vulnerabilidades
+aplicables al código y0 en paquetes importados; conserva1 aviso del módulo.
+El grafo con módulos estándar y CLI tampoco requiere el paquete OpenPGP.
+Este resultado se limita a este binario/configuración, sin plugins adicionales.
+No se añadió ninguna exclusión; Trivy sigue guardando el aviso UNKNOWN.
+Evidencia de la suite completa aprobada:
+https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/37032456413
+Código oficial del comportamiento del escáner:
+https://github.com/golang/vuln/blob/v1.8.0/internal/vulncheck/binary.go#L98-L104
 Referencia oficial: https://pkg.go.dev/vuln/GO-2026-5932
 
 ## Hallazgos del sistema de la aplicación
@@ -52,6 +63,12 @@ Esto no demuestra que sean inocuos o explotables. Requieren revisión antes
 | CVE-2026-95619 | libstdc++6 | MEDIUM | 14.2.0-19 |
 | CVE-2026-27171 | zlib1g | MEDIUM | 1:1.3.dfsg+really1.3.1-1+b1 |
 | CVE-2026-85091 | zlib1g | MEDIUM | 1:1.3.dfsg+really1.3.1-1+b1 |
+
+## Advertencias de las herramientas
+
+Trivy emitió un aviso en cada imagen: algunas severidades se toman de otros
+proveedores. No es un fallo de escaneo; conservar la fuente al priorizar riesgos.
+Referencia: https://trivy.dev/docs/v0.75/guide/scanner/vulnerability/#severity-selection
 
 ## Controles aplicados
 

@@ -54,5 +54,37 @@ Este permiso de origen dinámico se limita al servidor de desarrollo.
 La revisión final local comprobó inicio, enlace directo de práctica y recarga,
 cierre de sesión y ocultación de una revisión inválida; consolas sin avisos.
 Queda verificar móvil físico y recuperación de cuenta
-desde el correo real. En Linux: build de Docker, HTTPS/Caddy, cierre/reinicio,
-restauración y carga. La suite automatizada no sustituye estas comprobaciones.
+desde el correo real. Los ensayos de Linux de Docker/Caddy, cierre/reinicio,
+restauración y carga ya están automatizados y aprobados en CI (véase abajo).
+Queda repetir las comprobaciones operativas en el servidor destino.
+
+## Validación ampliada — 2026-10-02
+
+GitHub Actions en Ubuntu24.04, ejecución37031738943:
+https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/37031738943
+
+- Las49 pruebas pasan también dentro de la imagen final con sistema de archivos
+  de solo lectura, usuario1000, memoria1GiB,2CPU y sin capacidades adicionales.
+- Volúmenes reales Docker: sesiones/partida/reloj sobreviven a SIGTERM y reinicio;
+  copia consistente de SQLite en uso, restauración tras una mutación y recuperación
+  tras SIGKILL. Integridad y referencias verificadas en el volumen restaurado.
+-128 sesiones autenticadas sintéticas,64 partidas y384 acciones: p95=93.1ms,
+  event loop p99=91.2ms, RSS=138.5MiB. No mide login ni certifica capacidad del
+  servidor destino; repetir allí antes de abrir al público.
+- Chromium automatizado, escritorio1280×800 y táctil simulado390×844: registro,
+  cierre/inicio de sesión, dos jugadores, arrastre/toques, recarga y recuperación,
+  tablas, rompecabezas, práctica persistente, promoción y progreso. Sin errores
+  ni advertencias de consola ni desbordamiento horizontal en los recorridos.
+- Corregido cierre de sesión móvil: el botón ahora permanece en la cabecera.
+
+Los controles funcionales pasaron en esa ejecución. La evaluación de seguridad
+se registra separadamente en SECURITY_REVIEW.md; no se ha aprobado la apertura
+pública. Estas pruebas usan cuentas, correo simulado y volúmenes desechables.
+
+Validación posterior completa, incluida seguridad, aprobada en ejecución37032456413:
+https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/37032456413
+Carga de esta repetición: p95=184.1ms, event loop p99=181.0ms, RSS=136.9MiB;
+las métricas varían entre ejecuciones y todas quedan por debajo del umbral de1s.
+Sin hallazgos altos/críticos; quedan23 medios y8 bajos y1 aviso UNKNOWN del
+módulo del proxy. El análisis del binario confirma0 paquetes vulnerables
+importados. Revisar SECURITY_REVIEW.md para alcance y advertencias del escáner.
