@@ -1,0 +1,68 @@
+name: Validate MVP
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-container:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build Linux image and run all tests with real Stockfish
+        run: docker build --progress=plain -t jaque-royale:qa .
+      - name: Validate HTTPS proxy configuration
+        run: |
+          docker build -f deploy/Dockerfile.caddy -t jaque-royale-proxy:qa .
+          docker run --rm jaque-royale-proxy:qa caddy version
+          docker run --rm -e DOMAIN=chess.example.com -v "$PWD/deploy/Caddyfile:/etc/caddy/Caddyfile:ro" jaque-royale-proxy:qa caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+      - name: Verify runtime uses a non-root user
+        run: test "$(docker run --rm --entrypoint node jaque-royale:qa -e 'console.log(process.getuid())')" = "1000"
+      - name: Audit application dependencies
+        run: docker build --target build -t jaque-royale:build . && docker run --rm --entrypoint pnpm jaque-royale:build audit --prod
+      - name: Repeat complete suite inside final read-only runtime image
+        run: docker run --rm --read-only --tmpfs=/tmp:rw,size=128m,mode=1777 --memory=1g --cpus=2 --cap-drop=ALL -e NODE_ENV=development jaque-royale:qa node --test --test-concurrency=2
+      - name: Exercise persistent volumes, process failures and restoration
+        run: node scripts/container-check.mjs
+      - name: Load test 128 authenticated sessions with bounded resources
+        run: docker run --rm --memory=1g --cpus=2 -e NODE_ENV=development -e LOAD_CLIENTS=128 jaque-royale:qa node --test test/concurrent-games.test.js
+      - name: Browser journeys on desktop and simulated touch device
+        run: |
+          npm install --prefix .qa-tools --ignore-scripts --no-audit --no-fund playwright@1.63.0
+          .qa-tools/node_modules/.bin/playwright install --with-deps chromium
+          docker run -d --name chess-browser --init -e NODE_ENV=development -e HOST=0.0.0.0 -p 127.0.0.1:3001:3001 jaque-royale:qa node scripts/preview-qa.mjs
+          for attempt in $(seq 1 50); do curl -fsS http://127.0.0.1:3001/api/ready && break || sleep 1; done
+          node scripts/browser-check.mjs
+          node scripts/training-race-check.mjs
+      - name: Verify compiled proxy against the Go vulnerability database
+        if: always()
+        run: docker build --target verify -f deploy/Dockerfile.caddy .
+      - name: Scan runtime image for all known vulnerability severities
+        if: always()
+        run: |
+          mkdir -p artifacts
+          docker save jaque-royale:qa -o artifacts/runtime.tar
+          docker run --rm -v "$PWD/artifacts:/scan" aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --input /scan/runtime.tar --scanners vuln --format json --output /scan/vulnerabilities.json
+          docker save jaque-royale-proxy:qa -o artifacts/proxy.tar
+          docker run --rm -v "$PWD/artifacts:/scan" aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --input /scan/proxy.tar --scanners vuln --format json --output /scan/proxy-vulnerabilities.json
+          jq '[.Results[]?.Vulnerabilities[]? | {id: .VulnerabilityID, package: .PkgName, severity: .Severity, installed: .InstalledVersion, fixed: .FixedVersion}]' artifacts/vulnerabilities.json > artifacts/vulnerability-summary.json
+          cat artifacts/vulnerability-summary.json
+          test "$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH" or .Severity == "CRITICAL")] | length' artifacts/vulnerabilities.json)" = "0"
+          jq '[.Results[]?.Vulnerabilities[]? | {id: .VulnerabilityID, package: .PkgName, severity: .Severity, installed: .InstalledVersion, fixed: .FixedVersion}]' artifacts/proxy-vulnerabilities.json > artifacts/proxy-summary.json
+          cat artifacts/proxy-summary.json
+          test "$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH" or .Severity == "CRITICAL")] | length' artifacts/proxy-vulnerabilities.json)" = "0"
+      - name: Retain test and security reports
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: qa-reports
+          path: |
+            artifacts/*.json
+            artifacts/*.png
+          retention-days: 14
+      - name: Close disposable browser container
+        if: always()
+        run: docker rm -f chess-browser || true

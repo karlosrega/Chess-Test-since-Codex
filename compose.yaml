@@ -1,0 +1,79 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    mem_limit: 1g
+    cpus: 2
+    pids_limit: 128
+    stop_grace_period: 30s
+    environment:
+      PUBLIC_URL: https://${DOMAIN:?Configura DOMAIN}
+      SMTP_HOST: ${SMTP_HOST:?Configura SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:?Configura SMTP_USER}
+      SMTP_FROM: ${SMTP_FROM:?Configura SMTP_FROM}
+      SMTP_PASSWORD_FILE: /run/secrets/smtp_password
+      TRUST_PROXY_IP: 172.30.42.2
+    secrets:
+      - smtp_password
+    volumes:
+      - chess_data:/app/data
+      - chess_backups:/app/backups
+    networks:
+      chess:
+        ipv4_address: 172.30.42.3
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+  caddy:
+    image: jaque-royale-proxy:local
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.caddy
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      DOMAIN: ${DOMAIN:?Configura DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      chess:
+        ipv4_address: 172.30.42.2
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+secrets:
+  smtp_password:
+    file: ./deploy/secrets/smtp_password
+volumes:
+  chess_data:
+  chess_backups:
+  caddy_data:
+  caddy_config:
+networks:
+  chess:
+    ipam:
+      config:
+        - subnet: 172.30.42.0/24

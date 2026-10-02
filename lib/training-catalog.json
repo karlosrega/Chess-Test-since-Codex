@@ -1,0 +1,1126 @@
+[
+  {
+    "id": "p01",
+    "kind": "puzzle",
+    "title": "Mate de pasillo · este",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "La fila del fondo queda cerrada por los propios peones.",
+    "fen": "6k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e1e8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p02",
+    "kind": "puzzle",
+    "title": "Mate de pasillo · oeste",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "La fila del fondo queda cerrada por los propios peones.",
+    "fen": "1k6/ppp5/8/8/8/8/PPP5/1K1R4 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d1d8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p03",
+    "kind": "puzzle",
+    "title": "Mate de pasillo · sur",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "La fila del fondo queda cerrada por los propios peones.",
+    "fen": "4r1k1/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "e8e1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p04",
+    "kind": "puzzle",
+    "title": "Mate de pasillo · norte",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "La fila del fondo queda cerrada por los propios peones.",
+    "fen": "1k1r4/ppp5/8/8/8/8/PPP5/1K6 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "d8d1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p05",
+    "kind": "puzzle",
+    "title": "Mate de pasillo · este 1",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "La fila del fondo queda cerrada por los propios peones.",
+    "fen": "6k1/5ppp/8/8/8/8/P4PPP/4R1K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e1e8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p06",
+    "kind": "puzzle",
+    "title": "Mate de pasillo · oeste 2",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "La fila del fondo queda cerrada por los propios peones.",
+    "fen": "1k6/ppp5/8/8/8/8/PPP1P3/1K1R4 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d1d8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p07",
+    "kind": "puzzle",
+    "title": "Dama y rey coordinados · este",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "g6g7"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p08",
+    "kind": "puzzle",
+    "title": "Dama y rey coordinados · oeste",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "k7/8/1QK5/8/8/8/8/8 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "b6b7"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p09",
+    "kind": "puzzle",
+    "title": "Dama y rey coordinados · sur",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "8/8/8/8/8/5kq1/8/7K b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "g3g2"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p10",
+    "kind": "puzzle",
+    "title": "Dama y rey coordinados · norte",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "8/8/8/8/8/1qk5/8/K7 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "b3b2"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "p11",
+    "kind": "puzzle",
+    "title": "Dos amenazas, un caballo · este",
+    "difficulty": "medium",
+    "motif": "horquilla",
+    "objective": "Da jaque con el caballo y captura la dama.",
+    "explanation": "Un jaque obliga al rey a responder: después recoge la dama atacada.",
+    "fen": "2q1k3/5ppp/8/5N2/8/8/5PPP/3Q2K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "f5d6",
+        "e8d7",
+        "d6c8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 984
+      }
+    }
+  },
+  {
+    "id": "p12",
+    "kind": "puzzle",
+    "title": "Dos amenazas, un caballo · oeste",
+    "difficulty": "medium",
+    "motif": "horquilla",
+    "objective": "Da jaque con el caballo y captura la dama.",
+    "explanation": "Un jaque obliga al rey a responder: después recoge la dama atacada.",
+    "fen": "3k1q2/ppp5/8/2N5/8/8/PPP5/1K2Q3 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "c5e6",
+        "d8e8",
+        "e6f8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 988
+      }
+    }
+  },
+  {
+    "id": "p13",
+    "kind": "puzzle",
+    "title": "Dos amenazas, un caballo · sur",
+    "difficulty": "medium",
+    "motif": "horquilla",
+    "objective": "Da jaque con el caballo y captura la dama.",
+    "explanation": "Un jaque obliga al rey a responder: después recoge la dama atacada.",
+    "fen": "3q2k1/5ppp/8/8/5n2/8/5PPP/2Q1K3 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "f4d3",
+        "e1d1",
+        "d3c1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 990
+      }
+    }
+  },
+  {
+    "id": "p14",
+    "kind": "puzzle",
+    "title": "Un peón contra dos caballos · este",
+    "difficulty": "medium",
+    "motif": "horquilla",
+    "objective": "Avanza el peón central y gana un caballo.",
+    "explanation": "El peón ataca dos casillas diagonales a la vez; no pueden escapar ambos caballos.",
+    "fen": "6k1/5ppp/2n1n3/8/3P4/8/5PPP/3Q2K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d4d5",
+        "c6d8",
+        "d5e6"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 781
+      }
+    }
+  },
+  {
+    "id": "p15",
+    "kind": "puzzle",
+    "title": "Un peón contra dos caballos · oeste",
+    "difficulty": "medium",
+    "motif": "horquilla",
+    "objective": "Avanza el peón central y gana un caballo.",
+    "explanation": "El peón ataca dos casillas diagonales a la vez; no pueden escapar ambos caballos.",
+    "fen": "1k6/ppp5/3n1n2/8/4P3/8/PPP5/1K2Q3 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e4e5",
+        "f6e4",
+        "e5d6"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 804
+      }
+    }
+  },
+  {
+    "id": "p16",
+    "kind": "puzzle",
+    "title": "Un peón contra dos caballos · sur",
+    "difficulty": "medium",
+    "motif": "horquilla",
+    "objective": "Avanza el peón central y gana un caballo.",
+    "explanation": "El peón ataca dos casillas diagonales a la vez; no pueden escapar ambos caballos.",
+    "fen": "3q2k1/5ppp/8/3p4/8/2N1N3/5PPP/6K1 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "d5d4",
+        "c3d1",
+        "d4e3"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 772
+      }
+    }
+  },
+  {
+    "id": "p17",
+    "kind": "puzzle",
+    "title": "Abre la columna · este",
+    "difficulty": "medium",
+    "motif": "descubierto",
+    "objective": "Da jaque descubierto y captura la dama.",
+    "explanation": "Al apartar el caballo se abre la columna de la torre y nace una segunda amenaza.",
+    "fen": "4k3/8/8/8/7q/4N3/5PPP/4R1K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e3f5",
+        "e8d7",
+        "f5h4"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 826
+      }
+    }
+  },
+  {
+    "id": "p18",
+    "kind": "puzzle",
+    "title": "Abre la columna · oeste",
+    "difficulty": "medium",
+    "motif": "descubierto",
+    "objective": "Da jaque descubierto y captura la dama.",
+    "explanation": "Al apartar el caballo se abre la columna de la torre y nace una segunda amenaza.",
+    "fen": "3k4/8/8/8/q7/3N4/PPP5/1K1R4 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d3c5",
+        "d8e7",
+        "c5a4"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 869
+      }
+    }
+  },
+  {
+    "id": "p19",
+    "kind": "puzzle",
+    "title": "La pieza inmovilizada · este",
+    "difficulty": "medium",
+    "motif": "clavada",
+    "objective": "Captura el caballo clavado sin perder material.",
+    "explanation": "El caballo no puede salir de la diagonal del alfil: dejaría a su rey en jaque.",
+    "fen": "8/4k3/5n2/4P1B1/8/8/5PPP/6K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e5f6"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 1079
+      }
+    }
+  },
+  {
+    "id": "p20",
+    "kind": "puzzle",
+    "title": "La pieza inmovilizada · oeste",
+    "difficulty": "medium",
+    "motif": "clavada",
+    "objective": "Captura el caballo clavado sin perder material.",
+    "explanation": "El caballo no puede salir de la diagonal del alfil: dejaría a su rey en jaque.",
+    "fen": "8/3k4/2n5/1B1P4/8/8/PPP5/1K6 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d5c6"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 944
+      }
+    }
+  },
+  {
+    "id": "p21",
+    "kind": "puzzle",
+    "title": "Cierra la última salida · este",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Primero el rey restringe la huida; la torre da el jaque decisivo.",
+    "fen": "7k/8/5K2/8/8/8/8/R7 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "f6f7",
+        "h8h7",
+        "a1h1"
+      ],
+      [
+        "f6g6",
+        "h8g8",
+        "a1a8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p22",
+    "kind": "puzzle",
+    "title": "Cierra la última salida · oeste",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Primero el rey restringe la huida; la torre da el jaque decisivo.",
+    "fen": "k7/8/2K5/8/8/8/8/7R w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "c6c7",
+        "a8a7",
+        "h1a1"
+      ],
+      [
+        "c6b6",
+        "a8b8",
+        "h1h8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p23",
+    "kind": "puzzle",
+    "title": "Cierra la última salida · sur",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Primero el rey restringe la huida; la torre da el jaque decisivo.",
+    "fen": "r7/8/8/8/8/5k2/8/7K b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "f3f2",
+        "h1h2",
+        "a8h8"
+      ],
+      [
+        "f3g3",
+        "h1g1",
+        "a8a1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p24",
+    "kind": "puzzle",
+    "title": "Cierra la última salida · norte",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Primero el rey restringe la huida; la torre da el jaque decisivo.",
+    "fen": "7r/8/8/8/8/2k5/8/K7 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "c3c2",
+        "a1a2",
+        "h8a8"
+      ],
+      [
+        "c3b3",
+        "a1b1",
+        "h8h1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p25",
+    "kind": "puzzle",
+    "title": "La escalera de torres · este",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Una torre corta la fila de escape y la otra da mate desde la siguiente.",
+    "fen": "7k/8/8/8/8/8/R7/1R4K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "a2a7",
+        "h8g8",
+        "b1b8"
+      ],
+      [
+        "b1b7",
+        "h8g8",
+        "a2a8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p26",
+    "kind": "puzzle",
+    "title": "La escalera de torres · oeste",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Una torre corta la fila de escape y la otra da mate desde la siguiente.",
+    "fen": "k7/8/8/8/8/8/7R/1K4R1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "h2h7",
+        "a8b8",
+        "g1g8"
+      ],
+      [
+        "g1g7",
+        "a8b8",
+        "h2h8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p27",
+    "kind": "puzzle",
+    "title": "La escalera de torres · sur",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Una torre corta la fila de escape y la otra da mate desde la siguiente.",
+    "fen": "1r4k1/r7/8/8/8/8/8/7K b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "a7a2",
+        "h1g1",
+        "b8b1"
+      ],
+      [
+        "b8b2",
+        "h1g1",
+        "a7a1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p28",
+    "kind": "puzzle",
+    "title": "La escalera de torres · norte",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en dos jugadas propias.",
+    "explanation": "Una torre corta la fila de escape y la otra da mate desde la siguiente.",
+    "fen": "1k4r1/7r/8/8/8/8/8/K7 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "h7h2",
+        "a1b1",
+        "g8g1"
+      ],
+      [
+        "g8g2",
+        "a1b1",
+        "h7h1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      }
+    }
+  },
+  {
+    "id": "p29",
+    "kind": "puzzle",
+    "title": "Rey activo, torre precisa · este",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en tres jugadas propias.",
+    "explanation": "Mejora tu rey antes de usar la torre: las casillas de escape son la clave.",
+    "fen": "7k/8/8/4K3/8/8/8/R7 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e5f6",
+        "h8g8",
+        "a1h1",
+        "g8f8",
+        "h1h8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      }
+    }
+  },
+  {
+    "id": "p30",
+    "kind": "puzzle",
+    "title": "Rey activo, torre precisa · oeste",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en tres jugadas propias.",
+    "explanation": "Mejora tu rey antes de usar la torre: las casillas de escape son la clave.",
+    "fen": "k7/8/8/3K4/8/8/8/7R w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d5c6",
+        "a8b8",
+        "h1a1",
+        "b8c8",
+        "a1a8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      }
+    }
+  },
+  {
+    "id": "e01",
+    "kind": "exercise",
+    "title": "Dama y rey coordinados · este",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "g6g7"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "e02",
+    "kind": "exercise",
+    "title": "Dama y rey coordinados · oeste",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "k7/8/1QK5/8/8/8/8/8 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "b6b7"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "e03",
+    "kind": "exercise",
+    "title": "Dama y rey coordinados · sur",
+    "difficulty": "easy",
+    "motif": "mate",
+    "objective": "Da mate en una jugada.",
+    "explanation": "Acerca la dama, protegida por tu rey, sin dejar casillas de escape.",
+    "fen": "8/8/8/8/8/5kq1/8/7K b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "g3g2"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 1
+      }
+    }
+  },
+  {
+    "id": "e04",
+    "kind": "exercise",
+    "title": "Rey activo, torre precisa · este",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en tres jugadas propias.",
+    "explanation": "Mejora tu rey antes de usar la torre: las casillas de escape son la clave.",
+    "fen": "7k/8/8/4K3/8/8/8/R7 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e5f6",
+        "h8g8",
+        "a1h1",
+        "g8f8",
+        "h1h8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      }
+    }
+  },
+  {
+    "id": "e05",
+    "kind": "exercise",
+    "title": "Rey activo, torre precisa · oeste",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en tres jugadas propias.",
+    "explanation": "Mejora tu rey antes de usar la torre: las casillas de escape son la clave.",
+    "fen": "k7/8/8/3K4/8/8/8/7R w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d5c6",
+        "a8b8",
+        "h1a1",
+        "b8c8",
+        "a1a8"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      }
+    }
+  },
+  {
+    "id": "e06",
+    "kind": "exercise",
+    "title": "Rey activo, torre precisa · sur",
+    "difficulty": "hard",
+    "motif": "mate",
+    "objective": "Fuerza el mate en tres jugadas propias.",
+    "explanation": "Mejora tu rey antes de usar la torre: las casillas de escape son la clave.",
+    "fen": "r7/8/8/8/4k3/8/8/7K b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "e4f3",
+        "h1g1",
+        "a8h8",
+        "g1f1",
+        "h8h1"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      }
+    }
+  },
+  {
+    "id": "e07",
+    "kind": "exercise",
+    "title": "Rey delante del peón · este",
+    "difficulty": "medium",
+    "motif": "final",
+    "objective": "Acompaña al peón hasta coronar.",
+    "explanation": "El rey conquista las casillas de paso; evita empujar el peón sin apoyo.",
+    "fen": "4k3/8/4K3/4P3/8/8/8/8 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "e6d6",
+        "e8f7",
+        "e5e6",
+        "f7f6",
+        "e6e7",
+        "f6f5",
+        "e7e8q"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 698
+      }
+    }
+  },
+  {
+    "id": "e08",
+    "kind": "exercise",
+    "title": "Rey delante del peón · oeste",
+    "difficulty": "medium",
+    "motif": "final",
+    "objective": "Acompaña al peón hasta coronar.",
+    "explanation": "El rey conquista las casillas de paso; evita empujar el peón sin apoyo.",
+    "fen": "3k4/8/3K4/3P4/8/8/8/8 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "d6c6",
+        "d8e7",
+        "d5d6",
+        "e7e6",
+        "d6d7",
+        "e6e7",
+        "c6c7",
+        "e7e6",
+        "d7d8q"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 661
+      }
+    }
+  },
+  {
+    "id": "e09",
+    "kind": "exercise",
+    "title": "Rey delante del peón · sur",
+    "difficulty": "medium",
+    "motif": "final",
+    "objective": "Acompaña al peón hasta coronar.",
+    "explanation": "El rey conquista las casillas de paso; evita empujar el peón sin apoyo.",
+    "fen": "8/8/8/8/4p3/4k3/8/4K3 b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "e3f3",
+        "e1d2",
+        "e4e3",
+        "d2c3",
+        "f3g2",
+        "c3d3",
+        "g2f3",
+        "d3d4",
+        "e3e2",
+        "d4c5",
+        "e2e1q"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "cp",
+        "value": 689
+      }
+    }
+  },
+  {
+    "id": "e10",
+    "kind": "exercise",
+    "title": "El último paso · este",
+    "difficulty": "easy",
+    "motif": "final",
+    "objective": "Corona el peón en dama.",
+    "explanation": "Al alcanzar la última fila puedes elegir una pieza nueva. Aquí la dama conserva la ventaja.",
+    "fen": "7k/P7/8/8/8/8/8/6K1 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "a7a8q"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 9
+      }
+    }
+  },
+  {
+    "id": "e11",
+    "kind": "exercise",
+    "title": "El último paso · oeste",
+    "difficulty": "easy",
+    "motif": "final",
+    "objective": "Corona el peón en dama.",
+    "explanation": "Al alcanzar la última fila puedes elegir una pieza nueva. Aquí la dama conserva la ventaja.",
+    "fen": "k7/7P/8/8/8/8/8/1K6 w - - 0 1",
+    "color": "w",
+    "solutions": [
+      [
+        "h7h8q"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 9
+      }
+    }
+  },
+  {
+    "id": "e12",
+    "kind": "exercise",
+    "title": "El último paso · sur",
+    "difficulty": "easy",
+    "motif": "final",
+    "objective": "Corona el peón en dama.",
+    "explanation": "Al alcanzar la última fila puedes elegir una pieza nueva. Aquí la dama conserva la ventaja.",
+    "fen": "6k1/8/8/8/8/8/p7/7K b - - 0 1",
+    "color": "b",
+    "solutions": [
+      [
+        "a2a1q"
+      ]
+    ],
+    "verification": {
+      "engine": "Stockfish 19",
+      "nodes": 200000,
+      "evaluation": {
+        "type": "mate",
+        "value": 11
+      }
+    }
+  }
+]
