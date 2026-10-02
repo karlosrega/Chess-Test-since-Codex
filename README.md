@@ -73,8 +73,9 @@ cuentas, privacidad, migraciones, WebSockets, reglas, relojes, Elo, bots/motor r
 análisis,42 composiciones, progreso, SMTP local, preparación de producción,
 bloqueo de instancias y copias/restauración. También se prueban32 sesiones con16
 partidas simultáneas. BROWSER_QA.md registra recorridos visuales y límites de esa
-validación. El workflow .github/workflows/validate.yaml construye la imagen Linux,
-ejecuta pruebas y valida Caddy cuando se publique/ejecute en GitHub.
+validación. La validación en GitHub Actions construyó la imagen Linux y aprobó las49 pruebas
+con Stockfish real, validación Caddy, usuario1000 y auditoría de dependencias.
+Evidencia: https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/36954116089.
 
 ## Datos y operación
 
@@ -95,9 +96,9 @@ exacto de Stockfish. El MVP opera en una sola instancia con volumen local.
 
 ## Estado para producción
 
-El MVP funciona y tiene validación local. **La ejecución de Docker/Linux, la
-cadena HTTPS real y el SMTP real siguen pendientes**: este equipo no tiene
-Docker/WSL, y aún no se ha elegido dominio/proveedor. No considerar la apertura
+El MVP funciona y tiene validación local. **La cadena HTTPS real y el SMTP real siguen pendientes**: la imagen y pruebas
+Docker/Linux ya se validaron en GitHub Actions, pero aún no se ha elegido
+dominio/proveedor ni comprobado el entorno destino. No considerar la apertura
 pública aprobada hasta completar los criterios de OPERATIONS.md.
 
 La precisión es un índice aproximado propio:100×exp(-0.004×pérdida media), con

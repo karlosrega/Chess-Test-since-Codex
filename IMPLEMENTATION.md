@@ -42,15 +42,20 @@ material de mate, sin resolver todas las fortalezas arbitrarias.
 
 ## Validación pendiente antes de apertura pública
 
-1. Ejecutar build/pruebas Docker en Linux, validar Caddy y permisos reales del volumen.
+1. Build/pruebas Docker en Linux y validación Caddy aprobados; falta comprobar
+   permisos y persistencia del volumen en el entorno destino.
 2. Comprobar HTTPS, cierre/reinicio, copia/restauración y carga en el entorno destino.
 3. Escanear vulnerabilidades de la imagen y revisar los hallazgos aplicables.
 4. Elegir dominio y SMTP: el usuario todavía no dispone de ambos. Configurar secretos
    y probar recuperación desde un correo real, certificado y renovación.
 5. Revisar en un teléfono real y configurar copias externas y monitoreo operativo.
 
-El equipo actual no dispone de Docker ni WSL instalado. El workflow de validación
-Linux está preparado pero todavía no se ha publicado ni ejecutado. Los cambios
-actuales permanecen locales; no se ha desplegado el producto. No declarar el
-objetivo completo hasta cerrar las validaciones necesarias. OPERATIONS.md contiene
+El equipo actual no dispone de Docker ni WSL instalado. La rama
+codex/jaque-royale-mvp y el PR en borrador #1 se publicaron con autorización.
+La imagen Linux se construyó en Ubuntu24.04;49 pruebas aprobadas, Caddy válido,
+usuario no root y dependencias sin vulnerabilidades conocidas. Evidencia:
+https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/36954116089.
+Se detectaron y corrigieron dos advertencias de Caddy (cabecera redundante y
+formato). No se ha desplegado ni fusionado el producto. No declarar el objetivo
+completo hasta cerrar las validaciones necesarias. OPERATIONS.md contiene
 los procedimientos y criterios de puesta en producción.

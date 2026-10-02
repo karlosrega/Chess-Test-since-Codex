@@ -110,7 +110,8 @@ recupera el bloqueo cuando confirma que el proceso anterior ya no existe.
 
 ## Criterios que faltan antes de apertura pública
 
-- [ ] Build Linux completo y configuración Caddy validados por Docker/CI.
+- [x] Build Linux completo y configuración Caddy validados por Docker/CI.
+  https://github.com/karlosrega/Chess-Test-since-Codex/actions/runs/36954116089 (49 pruebas, usuario1000 y auditoría de dependencias).
 - [ ] Auditoría de paquetes del sistema y de la imagen, además de pnpm audit.
 - [ ] Medición de carga y recuperación en el servidor elegido.
 - [ ] Dominio real, certificado, proveedor SMTP y recuperación recibida en buzón real.
